@@ -254,7 +254,7 @@
 }
 
 - (void) invokeTapToFocus:(CGPoint)point {
-    [self.delegate invokeTapToFocus:point];
+  [self.sessionManager tapToFocus:point.x yPoint:point.y];
 }
 
 @end
