@@ -23,7 +23,7 @@
 @property BOOL dragEnabled;
 @property BOOL tapToTakePicture;
 @property BOOL tapToFocus;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<TakePictureDelegate> delegate;
 
 // ADD INI — deklarasi takeSnapshot untuk dipakai dari CameraPreview.m
 - (void) takeSnapshot:(CGFloat)quality completion:(void(^)(UIImage *image))completion;

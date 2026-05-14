@@ -85,5 +85,5 @@
 - (NSArray *)  getSupportedPictureSizes;
 
 - (void)       tapToFocus:(CGFloat)xPoint yPoint:(CGFloat)yPoint;
-
+- (void) updateOrientation:(AVCaptureVideoOrientation)orientation;
 @end

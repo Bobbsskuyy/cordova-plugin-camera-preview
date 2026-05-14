@@ -458,4 +458,11 @@
     return sizes;
 }
 
+- (void) updateOrientation:(AVCaptureVideoOrientation)orientation {
+    AVCaptureConnection *connection = [self.dataOutput connectionWithMediaType:AVMediaTypeVideo];
+    if (connection && connection.isVideoOrientationSupported) {
+        connection.videoOrientation = orientation;
+    }
+}
+
 @end
