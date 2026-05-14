@@ -1,4 +1,5 @@
 #import "CameraRenderController.h"
+#import "CameraSessionManager.h"
 #import <CoreVideo/CVOpenGLESTextureCache.h>
 #import <GLKit/GLKit.h>
 #import <OpenGLES/ES2/glext.h>
