@@ -34,4 +34,7 @@
 @property BOOL tapToFocus;
 @property (nonatomic, assign) id delegate;
 
+// ADD INI — deklarasi takeSnapshot untuk dipakai dari CameraPreview.m
+- (void) takeSnapshot:(CGFloat)quality completion:(void(^)(UIImage *image))completion;
+
 @end

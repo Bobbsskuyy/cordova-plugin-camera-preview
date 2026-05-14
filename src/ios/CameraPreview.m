@@ -79,8 +79,12 @@
             // make transparent
             self.webView.opaque = NO;
             self.webView.backgroundColor = [UIColor clearColor];
-            self.webView.scrollView.opaque = NO;
-            self.webView.scrollView.backgroundColor = [UIColor clearColor];
+
+            if ([self.webView respondsToSelector:@selector(scrollView)]) {
+              UIScrollView *sv = [self.webView performSelector:@selector(scrollView)];
+              sv.opaque = NO;
+              sv.backgroundColor = [UIColor clearColor];
+            }
 
             // FIX #2: Gunakan _activeRootView helper
             // Menggantikan [self.viewController.view insertSubview:... atIndex:0]
@@ -553,6 +557,43 @@
 
 - (void) onFocusSetError:(NSString*)error {
     // delegate callback — no action needed here
+}
+
+- (void) setPreviewSize:(CDVInvokedUrlCommand*)command {
+    CDVPluginResult *pluginResult;
+    if (self.cameraRenderController != nil) {
+        CGFloat width = (CGFloat)[command.arguments[0] floatValue];
+        CGFloat height = (CGFloat)[command.arguments[1] floatValue];
+        CGRect frame = self.cameraRenderController.view.frame;
+        frame.size = CGSizeMake(width, height);
+        self.cameraRenderController.view.frame = frame;
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    } else {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Camera not started"];
+    }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void) setColorEffect:(CDVInvokedUrlCommand*)command {
+    // Color effects not supported on iOS via AVFoundation directly
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void) invokeTakePicture {
+    [self.sessionManager takePicture:0 maxHeight:0 quality:0.85 completion:^(UIImage *image) {
+        [self onPictureTaken:image];
+    }];
+}
+
+- (void) invokeTakePicture:(CGFloat)width withHeight:(CGFloat)height withQuality:(CGFloat)quality {
+    [self.sessionManager takePicture:width maxHeight:height quality:quality completion:^(UIImage *image) {
+        [self onPictureTaken:image];
+    }];
+}
+
+- (void) invokeTapToFocus:(CGPoint)point {
+    [self.sessionManager tapToFocus:point.x yPoint:point.y];
 }
 
 - (NSString *) getTempFilePath {

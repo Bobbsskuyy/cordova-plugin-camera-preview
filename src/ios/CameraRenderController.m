@@ -241,4 +241,16 @@
   [self.sessionManager updateOrientation:[self.sessionManager getCurrentOrientation:toInterfaceOrientation]];
 }
 
+- (void) takeSnapshot:(CGFloat)quality completion:(void(^)(UIImage *image))completion {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [UIScreen mainScreen].scale);
+        [self.view drawViewHierarchyInRect:self.view.bounds afterScreenUpdates:YES];
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        if (completion) {
+            completion(image);
+        }
+    });
+}
+
 @end
