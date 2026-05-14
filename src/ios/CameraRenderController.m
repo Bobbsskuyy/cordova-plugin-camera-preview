@@ -238,7 +238,7 @@
 }
 
 -(void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-  [self.sessionManager updateOrientation:[self.sessionManager getCurrentOrientation:toInterfaceOrientation]];
+  [self.sessionManager updateOrientation:[self.sessionManager getCurrentOrientation]];
 }
 
 - (void) takeSnapshot:(CGFloat)quality completion:(void(^)(UIImage *image))completion {
@@ -251,6 +251,10 @@
             completion(image);
         }
     });
+}
+
+- (void) invokeTapToFocus:(CGPoint)point {
+    [self.delegate invokeTapToFocus:point];
 }
 
 @end

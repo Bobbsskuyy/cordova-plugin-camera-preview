@@ -9,15 +9,6 @@
 
 #import "CameraSessionManager.h"
 
-@protocol TakePictureDelegate
-- (void) invokeTakePicture;
-- (void) invokeTakePictureOnFocus;
-@end;
-
-@protocol FocusDelegate
-- (void) invokeTapToFocus:(CGPoint)point;
-@end;
-
 @interface CameraRenderController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, FocusDelegate> {
   GLuint _renderBuffer;
   CVOpenGLESTextureCacheRef _videoTextureCache;
