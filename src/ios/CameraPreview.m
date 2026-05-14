@@ -596,6 +596,13 @@
     [self.sessionManager tapToFocus:point.x yPoint:point.y];
 }
 
+- (void) invokeTakePictureOnFocus {
+    // dipanggil saat tap-to-focus selesai lalu ambil foto otomatis
+    [self.sessionManager takePicture:0 maxHeight:0 quality:0.85 completion:^(UIImage *image) {
+        [self onPictureTaken:image];
+    }];
+}
+
 - (NSString *) getTempFilePath {
     NSString *tempDir = NSTemporaryDirectory();
     NSString *filename = [NSString stringWithFormat:@"%@%@.jpg", TMP_IMAGE_PREFIX, [[NSUUID UUID] UUIDString]];
