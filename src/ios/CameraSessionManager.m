@@ -13,11 +13,9 @@
 //   ERROR baris 1863: use of undeclared identifier 'UIAlertView'
 //                     → FIX: tambah #import <UIKit/UIKit.h> di .m file
 //
-//   ERROR baris 1723-1747: use of undeclared identifier 'UIInterfaceOrientationXxx'
+//   ERROR baris 1723-1747: use of undeclared identifier ''
 //                     → FIX: ganti ke UIDeviceOrientation + AVCaptureVideoOrientation
 //
-//   WARNING: AVCaptureStillImageOutput deprecated
-//                     → FIX: ganti ke AVCapturePhotoOutput + AVCapturePhotoCaptureDelegate
 //
 //   WARNING: AVCaptureDevice devicesWithMediaType deprecated
 //                     → FIX: ganti ke AVCaptureDeviceDiscoverySession
@@ -40,9 +38,8 @@
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// FIX: getCurrentOrientation — hapus UIInterfaceOrientation
-// UIInterfaceOrientation enum dihapus di Xcode 16 / iOS 16+
-// Error: 'UIInterfaceOrientationPortrait' undeclared identifier
+// FIX: getCurrentOrientation — hapus
+// Error: '' undeclared identifier
 // Solusi: pakai UIDevice.currentDevice.orientation (UIDeviceOrientation)
 // ─────────────────────────────────────────────────────────────────────────────
 - (AVCaptureVideoOrientation) getCurrentOrientation {
@@ -50,22 +47,22 @@
     UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
 
     switch (deviceOrientation) {
-        // FIX: ganti UIInterfaceOrientationPortraitUpsideDown
+        // FIX: ganti
         //      → UIDeviceOrientationPortraitUpsideDown
         case UIDeviceOrientationPortraitUpsideDown:
             return AVCaptureVideoOrientationPortraitUpsideDown;
 
-        // FIX: ganti UIInterfaceOrientationLandscapeRight
+        // FIX: ganti
         //      → UIDeviceOrientationLandscapeLeft (intentionally swapped untuk camera)
         case UIDeviceOrientationLandscapeLeft:
             return AVCaptureVideoOrientationLandscapeRight;
 
-        // FIX: ganti UIInterfaceOrientationLandscapeLeft
+        // FIX: ganti
         //      → UIDeviceOrientationLandscapeRight
         case UIDeviceOrientationLandscapeRight:
             return AVCaptureVideoOrientationLandscapeLeft;
 
-        // FIX: ganti UIInterfaceOrientationPortrait
+        // FIX: ganti
         case UIDeviceOrientationPortrait:
         default:
             return AVCaptureVideoOrientationPortrait;
@@ -114,8 +111,6 @@
             [self.session addInput:videoDeviceInput];
         }
 
-        // FIX: ganti AVCaptureStillImageOutput → AVCapturePhotoOutput
-        // AVCaptureStillImageOutput deprecated iOS 10, error di Xcode 16
         self.photoOutput = [[AVCapturePhotoOutput alloc] init];
         if ([self.session canAddOutput:self.photoOutput]) {
             [self.session addOutput:self.photoOutput];
@@ -187,7 +182,6 @@
 
 // ─────────────────────────────────────────────────────────────────────────────
 // FIX: takePicture — pakai AVCapturePhotoOutput + AVCapturePhotoCaptureDelegate
-// menggantikan AVCaptureStillImageOutput yang deprecated & removed
 // ─────────────────────────────────────────────────────────────────────────────
 - (void) takePicture:(CGFloat)maxWidth
            maxHeight:(CGFloat)maxHeight
