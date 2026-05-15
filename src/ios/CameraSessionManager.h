@@ -13,10 +13,13 @@
 #import <Cordova/Cordova.h>
 
 @protocol TakePictureDelegate
+- (void) invokeTakePicture;
+- (void) invokeTakePictureOnFocus;
 - (void) onPictureTaken:(NSString *)image;
 @end
 
 @protocol FocusDelegate
+- (void) invokeTapToFocus:(CGPoint)point;
 - (void) onFocusSet:(CGPoint)point;
 - (void) onFocusSetError:(NSString*)error;
 @end

@@ -258,4 +258,12 @@
   [self.sessionManager tapToFocus:point.x yPoint:point.y];
 }
 
+- (void) onFocusSet:(CGPoint)point {
+    // no-op di render controller
+}
+
+- (void) onFocusSetError:(NSString*)error {
+    // no-op di render controller
+}
+
 @end
